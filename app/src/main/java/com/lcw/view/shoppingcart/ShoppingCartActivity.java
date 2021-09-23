@@ -2,10 +2,12 @@ package com.lcw.view.shoppingcart;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.lcw.view.R;
 
@@ -30,6 +32,14 @@ public class ShoppingCartActivity extends AppCompatActivity {
             public void onGlobalLayout() {
                 iv_shop_cart.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 mShoppingCartWidth = iv_shop_cart.getMeasuredWidth();
+            }
+        });
+
+        TextView test1 = (TextView) findViewById(R.id.test1);
+        test1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("zyh", "onClick: ");
             }
         });
 

@@ -68,8 +68,6 @@ public class GoodsView extends View {
         mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCirclePaint.setStyle(Paint.Style.FILL);
         mCirclePaint.setColor(Color.RED);
-
-
     }
 
     /**
@@ -115,7 +113,7 @@ public class GoodsView extends View {
 
         //设置控制点
         mCircleConPoint.x = ((mCircleStartPoint.x + mCircleEndPoint.x) / 2);
-        mCircleConPoint.y = (20);
+        mCircleConPoint.y = (420);
 
         //设置值动画
         ValueAnimator valueAnimator = ValueAnimator.ofObject(new CirclePointEvaluator(), mCircleStartPoint, mCircleEndPoint);
@@ -164,6 +162,15 @@ public class GoodsView extends View {
             int y = (int) (Math.pow((1-t),2)*startPoint.y+2*(1-t)*t*mCircleConPoint.y+Math.pow(t,2)*endPoint.y);
 
             return new Point(x,y);
+
+            /**
+             * 假设a(10,1) b(1,10) t = 0.1
+             * Math.pow(0.9,2) = 0.81 * 10 = 8.1
+             * 2*(1-0.1)*0.1 = 0.18 * 5.5 = 0.99
+             * Math.pow(0.1,2) = 0.01 * 10 = 0.1
+             * => 9.19
+             *
+             * */
         }
 
     }

@@ -22,4 +22,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="飘星"/>
+
+    <Button
+        android:id="@+id/bt_quadTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="quadTo函数"/>
 </LinearLayout>

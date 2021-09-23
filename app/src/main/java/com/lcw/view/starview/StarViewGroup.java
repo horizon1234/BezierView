@@ -228,7 +228,8 @@ public class StarViewGroup extends RelativeLayout implements View.OnClickListene
     public boolean onTouchEvent(MotionEvent event) {
         mStartPoint = new Point(mScreenWidth / 2, mScreenHeight);
         mEndPoint = new Point((int) (mScreenWidth / 2 + 150 * mRandom.nextFloat()), 0);
-        mConOnePoint = new Point((int) (mScreenWidth * mRandom.nextFloat()), (int) (mScreenHeight * 3 * mRandom.nextFloat() / 4));
+        mConOnePoint = new Point((int) (mScreenWidth * mRandom.nextFloat()),
+                (int) (mScreenHeight * 3 * mRandom.nextFloat() / 4));
         mConTwoPoint = new Point(0, (int) (mScreenHeight * mRandom.nextFloat() / 4));
 
         addStar();

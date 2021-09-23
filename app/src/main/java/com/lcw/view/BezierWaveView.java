@@ -33,6 +33,8 @@ public class BezierWaveView extends View {
 
     private int mOffset;
 
+    private float mProgress = 0.5f;
+
 
     public BezierWaveView(Context context) {
         super(context);
@@ -65,42 +67,34 @@ public class BezierWaveView extends View {
         //路径,画笔设置
         mPath = new Path();
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(Color.BLUE);
+        mPaint.setColor(Color.parseColor("#00BFFF"));
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setStrokeWidth(8);
 
         setViewanimator();
-
-
+//        setProgress();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         mPath.reset();
-
-
         //贝塞尔曲线
-        mPath.moveTo(-mScreenWidth + mOffset, mScreenHeight / 2);
+        //当mOffset = 0
+        float naviProgress = 1 - mProgress;
+        float startY = mScreenHeight * naviProgress;
 
-//        mPath.quadTo(-mScreenWidth * 3 / 4 + mOffset, mScreenHeight / 2 - 100, -mScreenWidth / 2 + mOffset, mScreenHeight / 2);
-//        mPath.quadTo(-mScreenWidth / 4 + mOffset, mScreenHeight / 2 + 100, 0 + mOffset, mScreenHeight / 2);
-//        mPath.quadTo(mScreenWidth / 4 + mOffset, mScreenHeight / 2 - 100, mScreenWidth / 2 + mOffset, mScreenHeight / 2);
-//        mPath.quadTo(mScreenWidth * 3 / 4 + mOffset, mScreenHeight / 2 + 100, mScreenWidth + mOffset, mScreenHeight / 2);
+        mPath.moveTo(-mScreenWidth + mOffset, startY);
 
-            //简化写法
-            for (int i = 0; i < 2; i++) {
-                mPath.quadTo(-mScreenWidth * 3 / 4 + (mScreenWidth * i) + mOffset, mScreenHeight / 2 - 100, -mScreenWidth / 2 + (mScreenWidth * i) + mOffset, mScreenHeight / 2);
-                mPath.quadTo(-mScreenWidth / 4 + (mScreenWidth * i) + mOffset, mScreenHeight / 2 + 100, +(mScreenWidth * i) + mOffset, mScreenHeight / 2);
-            }
+        mPath.quadTo(-mScreenWidth * 3 / 4 + mOffset, mScreenHeight * naviProgress - 200, -mScreenWidth / 2 + mOffset, mScreenHeight * naviProgress);
+        mPath.quadTo(-mScreenWidth / 4 + mOffset, mScreenHeight * naviProgress + 200, 0 + mOffset, mScreenHeight * naviProgress);
+        mPath.quadTo(mScreenWidth / 4 + mOffset, mScreenHeight * naviProgress - 200, mScreenWidth / 2 + mOffset, mScreenHeight * naviProgress);
+        mPath.quadTo(mScreenWidth * 3 / 4 + mOffset, mScreenHeight * naviProgress + 200, mScreenWidth + mOffset, mScreenHeight * naviProgress);
 
         //空白部分填充
         mPath.lineTo(mScreenWidth, mScreenHeight);
         mPath.lineTo(0, mScreenHeight);
-
         canvas.drawPath(mPath, mPaint);
-
-
     }
 
     /**
@@ -115,6 +109,24 @@ public class BezierWaveView extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 mOffset = (int) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        valueAnimator.start();
+    }
+
+    /**
+     * 设置加载进度
+     * */
+    private void setProgress(){
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0f, 100f);
+        valueAnimator.setDuration(20000);
+        valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        valueAnimator.setInterpolator(new LinearInterpolator());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mProgress = (float) animation.getAnimatedValue() / 100f;
                 invalidate();
             }
         });

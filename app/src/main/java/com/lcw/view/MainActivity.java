@@ -36,7 +36,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, StarViewActivity.class));
             }
         });
-
+        findViewById(R.id.bt_quadTo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,QuadToActivity.class));
+            }
+        });
 
     }
 
